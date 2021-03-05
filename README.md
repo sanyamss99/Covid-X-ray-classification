@@ -1,12 +1,12 @@
 <h2>Multi Class Multi Object Random Moving Detection and Tracking<h2>
 <h5>By: Sanyam Sharma, Sarthak Pal, Utsav Goyal<h5>
 
-<b>AIM<b>
+<h3>AIM<h3>
  
 The aim of the project is to utilize Deep Learning techniques for multi-class multi-object classification in order to track the trajectories of the fishes in 3D space using MS Kinect camera which provides depth frames alongside RGB frames.
 
 
-<b>Objective<b>
+<h3>Objective<h3>
  
 We aim to distinguish the pattern of different species as well as different fishes of same species each having their own unique ID. We'll be using Deep Learning techniques to detect fishes and MS KinectV2 to record data in a controlled environment.
 
