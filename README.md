@@ -4,11 +4,13 @@
 <h3>AIM</h3>
  
 The aim of the project is to utilize Deep Learning techniques for multi-class multi-object classification in order to track the trajectories of the fishes in 3D space using MS Kinect camera which provides depth frames alongside RGB frames.
+![kinect](https://user-images.githubusercontent.com/41481020/110101933-2dc9d580-7dca-11eb-8dad-2e6e2b228339.png)
 
 
 <h3>Objective</h3>
  
 We aim to distinguish the pattern of different species as well as different fishes of same species each having their own unique ID. We'll be using Deep Learning techniques to detect fishes and MS KinectV2 to record data in a controlled environment.
+
 
 <h3>Data Gathering</h3>
  
@@ -18,6 +20,10 @@ Meaning for every pixel seen by the sensor, the Kinect measures distance from th
 
 The dataset used was gathered using KinectV2 in a control environment. Data was recorded and images on RGB frames, depth frames and infrared frames were extracted from the video for different values of concurrent timestamps.
 
+
+![0000](https://user-images.githubusercontent.com/41481020/110102410-c2343800-7dca-11eb-970a-fde0f3489c4d.jpg)
+![depth0000](https://user-images.githubusercontent.com/41481020/110102456-d0825400-7dca-11eb-9b6b-d58138f65bcc.jpg)
+
 <h3>Preparing Data</h3>
  
 Upon gathering data, we are left with RGB data frames, depth frames and infrared frames of all the respective pictures we extracted from the video. Now the next step comes is to align these depths and RGB images with infrared to analyze 3D view and utilize temperature information. Appropriate images were selected using the same timestamp and were mapped together using intrinsic values of Kinect V2.
@@ -26,6 +32,7 @@ Upon gathering data, we are left with RGB data frames, depth frames and infrared
 <h3>TimeStamp</h3>
  
 The timestamps of depth image and color image of a frame were not same so to synchronize those we observed the patterns and mapped those images together which had the minimum absolute difference in their timestamp
+![timestamp](https://user-images.githubusercontent.com/41481020/110102111-61a4fb00-7dca-11eb-9259-4a78b9eec798.png)
 
 Mapping RBG frame to Depth frame:
 While the Kinect’s color and depth streams are represented as arrays of information, you simply cannot compare the x & y coordinates between the sets of data equally
@@ -52,6 +59,7 @@ P2D_rgb.x = (P3D'.x * fx_rgb / P3D'.z) + cx_rgb
 P2D_rgb.y = (P3D'.y * fy_rgb / P3D'.z) + cy_rgb
 
 with R and T the rotation and translation parameters estimated during the stereo calibration.
+![mapping](https://user-images.githubusercontent.com/41481020/110102028-4639f000-7dca-11eb-95e4-df3732d63e2f.png)
 
 
 <h3>YOLOv5s</h3>
@@ -59,8 +67,13 @@ with R and T the rotation and translation parameters estimated during the ster
 We did the necessary augmentation so that it could learn better. We used the small version of YOLOv5 in order to get higher FPS from the system because the problem statement requires a real-time system. We achieved inference of 0.01 seconds on our test data (~100 FPS for our system).
 This image consists of all the fishes detected with correct classes assigned which is depicted by the first numbers written in the bounding box with high confidence values written next to the class ID number in the bounding boxes. 
 
+![results_yolov5s](https://user-images.githubusercontent.com/41481020/110102572-f4de3080-7dca-11eb-86a5-2486b50e72b7.png)
+
 
 <h3> Generating csv</h3>
  
  After generating all the bounding boxes, we used the middle point of bounding box as the coordinate of fish. After retracing the middle point of bounding box through all the resizing and cropping steps, we used the RGB and D mapping we created earlier to mark the coordinates of the fish, and hence the system was complete.
+ ![0015](https://user-images.githubusercontent.com/41481020/110102748-29ea8300-7dcb-11eb-8c3b-af0079238c5a.jpg)
+ 
+ 
 
